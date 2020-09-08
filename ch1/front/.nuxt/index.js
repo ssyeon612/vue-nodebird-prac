@@ -1,5 +1,5 @@
 import Vue from 'vue'
-
+import Vuex from 'vuex'
 import Meta from 'vue-meta'
 import ClientOnly from 'vue-client-only'
 import NoSsr from 'vue-no-ssr'
@@ -9,6 +9,7 @@ import NuxtError from './components/nuxt-error.vue'
 import Nuxt from './components/nuxt.js'
 import App from './App.js'
 import { setContext, getLocation, getRouteData, normalizeError } from './utils'
+import { createStore } from './store.js'
 
 /* Plugins */
 
@@ -44,8 +45,22 @@ Vue.use(Meta, {"keyName":"head","attribute":"data-n-head","ssrAttribute":"data-n
 
 const defaultTransition = {"name":"page","mode":"out-in","appear":false,"appearClass":"appear","appearActiveClass":"appear-active","appearToClass":"appear-to"}
 
+const originalRegisterModule = Vuex.Store.prototype.registerModule
+const baseStoreOptions = { preserveState: process.client }
+
+function registerModule (path, rawModule, options = {}) {
+  return originalRegisterModule.call(this, path, rawModule, { ...baseStoreOptions, ...options })
+}
+
 async function createApp(ssrContext, config = {}) {
   const router = await createRouter(ssrContext)
+
+  const store = createStore(ssrContext)
+  // Add this.$router into store actions/mutations
+  store.$router = router
+
+  // Fix SSR caveat https://github.com/nuxt/nuxt.js/issues/3757#issuecomment-414689141
+  store.registerModule = registerModule
 
   // Create Root instance
 
@@ -54,6 +69,7 @@ async function createApp(ssrContext, config = {}) {
   const app = {
     head: {"title":"NodeBird","meta":[],"link":[{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss?family=Roboto:100,300,400,500,700,900&display=swap"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Fcdn.jsdelivr.net\u002Fnpm\u002F@mdi\u002Ffont@latest\u002Fcss\u002Fmaterialdesignicons.min.css"}],"style":[],"script":[]},
 
+    store,
     router,
     nuxt: {
       defaultTransition,
@@ -98,6 +114,9 @@ async function createApp(ssrContext, config = {}) {
     ...App
   }
 
+  // Make app available into store via this.app
+  store.app = app
+
   const next = ssrContext ? ssrContext.next : location => app.router.push(location)
   // Resolve route
   let route
@@ -110,6 +129,7 @@ async function createApp(ssrContext, config = {}) {
 
   // Set context to app.context
   await setContext(app, {
+    store,
     route,
     next,
     error: app.nuxt.error.bind(app),
@@ -136,6 +156,9 @@ async function createApp(ssrContext, config = {}) {
       app.context[key] = value
     }
 
+    // Add into store
+    store[key] = app[key]
+
     // Check if plugin not already installed
     const installKey = '__nuxt_' + key + '_installed__'
     if (Vue[installKey]) {
@@ -156,6 +179,13 @@ async function createApp(ssrContext, config = {}) {
 
   // Inject runtime config as $config
   inject('config', config)
+
+  if (process.client) {
+    // Replace store state before plugins execution
+    if (window.__NUXT__ && window.__NUXT__.state) {
+      store.replaceState(window.__NUXT__.state)
+    }
+  }
 
   // Add enablePreview(previewData = {}) in context for plugins
   if (process.static && process.client) {
@@ -203,6 +233,7 @@ async function createApp(ssrContext, config = {}) {
   }
 
   return {
+    store,
     app,
     router
   }

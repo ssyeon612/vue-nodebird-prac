@@ -12,7 +12,8 @@
   ],
   "plugins": [],
   "rules": {
+    "vue/mustache-interpoliation-spacing": "off",
     "vue/max-attributes-per-line": "off",
-    "vue/singleline-html-element-content-newline": "off"
+    "vue/singleline-html-element-content-newline": "off",
   }
 }

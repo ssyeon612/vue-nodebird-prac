@@ -1,0 +1,25 @@
+{
+  "name": "vue-nodebird-front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nuxt",
+    "lint": "eslint **/*"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/vuetify": "^1.11.2",
+    "axios": "^0.20.0",
+    "nuxt": "^2.14.4",
+    "vue": "^2.6.12",
+    "vuetify": "^2.3.10",
+    "vuex": "^3.5.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.8.1",
+    "eslint-plugin-vue": "^6.2.2"
+  }
+}
