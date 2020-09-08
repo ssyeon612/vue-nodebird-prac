@@ -1,14 +1,13 @@
 <template>
     <v-app>
         <nav>
-            <v-toolbar dark-color="green">
+            <v-toolbar dark color="green">
                 <v-toolbar-title>
                     <nuxt-link to="/">NodeBird</nuxt-link>
                 </v-toolbar-title>
-                <v-spacer></v-spacer>
+                <v-spacer />
                 <v-toolbar-items>
-                    <v-text-filed label="검색" hide-details prepend-icon="mdi-magnify"
-                                  :style="{ display: 'flex', alignItems: 'center' }"/>
+                    <v-text-field label="검색" hide-details prepend-icon="mdi-magnify" :style="{ display: 'flex', alignItems: 'center' }"/>
                     <v-btn text nuxt to="/profile" :style="{ display: 'flex', alignItems: 'center' }">
                         <div>프로필</div>
                     </v-btn>
@@ -18,7 +17,7 @@
                 </v-toolbar-items>
             </v-toolbar>
         </nav>
-        <v-row>
+        <v-row no-gutters>
             <v-col cols="12" xs="12" md="4">
                 <login-form />
             </v-col>
