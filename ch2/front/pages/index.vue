@@ -2,7 +2,7 @@
     <v-container>
         <post-form v-if="me"/>
         <div>
-            <post-card v-for="p in mainPosts" :key="p.id"/>
+            <post-card v-for="p in mainPosts" :key="p.id" :post="p" />
         </div>
     </v-container>
 </template>

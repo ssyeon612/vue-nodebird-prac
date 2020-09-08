@@ -34,35 +34,38 @@
                 content: '',
             }
         },
-        computed:{
-            ...mapState('users',['me'])
+        computed: {
+            ...mapState('users', ['me'])
         },
         methods: {
-            onChangeTextarea() {
-                this.hideDetails = true;
-                this.success = false;
-                this.successMessages = '';
+            onChangeTextarea(value) {
+                if (value.length) {
+                    this.hideDetails = true;
+                    this.success = false;
+                    this.successMessages = '';
+                }
             },
             onSubmitForm() {
-                if(this.$refs.form.validate()){
+                if (this.$refs.form.validate()) {
                     this.$store.dispatch('posts/add', {             //게시글에 대한 정보를 담은 객체
                         content: this.content,
-                        User:{
-                            nickname: this.me.nickname
+                        User: {
+                            nickname: this.me.nickname,
                         },
                         Comments: [],
                         Images: [],
                         id: Date.now(),
                         createdAt: Date.now(),
                     })
-                    .then(() => {
-                        this.hideDetails = false;
-                        this.success = true;
-                        this.successMessages = '게시글 등록 성공';
-                    })
-                    .catch(() => {
+                        .then(() => {
+                            this.content = '';
+                            this.hideDetails = false;
+                            this.success = true;
+                            this.successMessages = '게시글 등록 성공';
+                        })
+                        .catch(() => {
 
-                    })
+                        })
                 }
             },
         },
