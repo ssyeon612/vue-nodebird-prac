@@ -1,0 +1,23 @@
+[
+  {
+    "name": "profile",
+    "path": "/profile",
+    "component": "C:\\\\Users\\\\appg\\\\IdeaProjects\\\\vue-nodebird\\\\ch1\\\\front\\\\pages\\\\profile.vue",
+    "chunkName": "pages/profile",
+    "_name": "_3275d76e"
+  },
+  {
+    "name": "signup",
+    "path": "/signup",
+    "component": "C:\\\\Users\\\\appg\\\\IdeaProjects\\\\vue-nodebird\\\\ch1\\\\front\\\\pages\\\\signup.vue",
+    "chunkName": "pages/signup",
+    "_name": "_1c961663"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "C:\\\\Users\\\\appg\\\\IdeaProjects\\\\vue-nodebird\\\\ch1\\\\front\\\\pages\\\\index.vue",
+    "chunkName": "pages/index",
+    "_name": "_bfae7d52"
+  }
+]

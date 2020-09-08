@@ -1,0 +1,19 @@
+{
+  "name": "vue-nodebird-front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nuxt"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/vuetify": "^1.11.2",
+    "axios": "^0.20.0",
+    "nuxt": "^2.14.4",
+    "vue": "^2.6.12",
+    "vuetify": "^2.3.10"
+  }
+}
