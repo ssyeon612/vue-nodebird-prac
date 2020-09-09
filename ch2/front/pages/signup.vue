@@ -44,6 +44,20 @@
                 ],
             };
         },
+        computed: {
+            me(){
+                return this.$store.state.users.me;
+            }
+        },
+        watch:{
+            me(value, oldValue){                    // 회원 가입 페이지에서 로그인시 메인화면으로 넘겨주기
+                if(value){
+                    this.$router.push({
+                        path: '/',
+                    });
+                }
+            }
+        },
         methods: {
             onSubmitForm(){
                 if(this.$refs.form.validate()){
@@ -68,6 +82,7 @@
                 title: '회원가입',
             }
         },
+        middleware: 'anonymous',
     }
 </script>
 

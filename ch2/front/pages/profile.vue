@@ -50,11 +50,6 @@
                 return this.$store.state.users.followingList;
             }
         },
-        head() {
-            return {
-                title: '프로필',
-            }
-        },
         methods: {
             onChangeNickname(){
                 this.$store.dispatch('users/changeNickname', {
@@ -67,8 +62,14 @@
             removeFollower(id){
                 this.$store.dispatch('users/removeFollower', { id });
             },
-        }
-    }
+        },
+        head() {
+            return {
+                title: '프로필',
+            };
+        },
+        middleware: 'authenticated',
+    };
 </script>
 
 <style>

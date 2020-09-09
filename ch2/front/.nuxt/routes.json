@@ -14,6 +14,13 @@
     "_name": "_55e72724"
   },
   {
+    "name": "post-id",
+    "path": "/post/:id",
+    "component": "C:\\\\Users\\\\appg\\\\IdeaProjects\\\\vue-nodebird\\\\ch2\\\\front\\\\pages\\\\post\\\\_id\\\\index.vue",
+    "chunkName": "pages/post/_id/index",
+    "_name": "_4c3aef84"
+  },
+  {
     "name": "index",
     "path": "/",
     "component": "C:\\\\Users\\\\appg\\\\IdeaProjects\\\\vue-nodebird\\\\ch2\\\\front\\\\pages\\\\index.vue",
