@@ -41,6 +41,7 @@
         },
         data() {
             return {
+                abc: [1, 2, 3],
                 valid: false,
                 nickname: '',
                 nicknameRules: [
@@ -65,6 +66,9 @@
         fetch({ store }) {
             store.dispatch('users/loadFollowers');
             store.dispatch('users/loadFollowings');
+        },
+        mounted() {
+          this.$set(this.abc, '0' ,'5');
         },
         methods: {
             onChangeNickname() {
