@@ -13,8 +13,10 @@
     </v-container>
     <v-container v-else>
         <v-card>
-            {{me.nickname}} 로그인되었습니다.
-            <v-btn @click="onLogOut">로그아웃</v-btn>
+            <v-container>
+                {{me.nickname}} 로그인되었습니다.
+                <v-btn @click="onLogOut">로그아웃</v-btn>
+            </v-container>
         </v-card>
     </v-container>
 </template>
@@ -35,21 +37,21 @@
                 ],
             }
         },
-        computed:{
-          me(){
-              return this.$store.state.users.me;
-          },
+        computed: {
+            me() {
+                return this.$store.state.users.me;
+            },
         },
         methods: {
             onSubmitForm() {
-                if(this.$refs.form.validate()){
+                if (this.$refs.form.validate()) {
                     this.$store.dispatch('users/logIn', {
-                       email: this.email,
-                       nickname: 'stella',
+                        email: this.email,
+                        nickname: 'stella',
                     });
                 }
             },
-            onLogOut(){
+            onLogOut() {
                 this.$store.dispatch('users/logOut');
             }
         },

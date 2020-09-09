@@ -1,6 +1,6 @@
 <template>
     <v-form ref="form" v-model="valid" style="position: relative" @submit.prevent="onSubmitForm">
-        <v-textareav
+        <v-textarea
                 v-model="content"
                 filled
                 auto-grow
@@ -15,54 +15,53 @@
 </template>
 
 <script>
-    export default{
-        props:{
+    export default {
+        props: {
             postId: {
                 type: String,
                 required: true,
             },
         },
-        data(){
-            return{
+        data() {
+            return {
                 valid: false,
                 content: '',
                 success: false,
                 successMessages: '',
-                hideDetails : true,
+                hideDetails: true,
             }
         },
         computed: {
-            me(){
+            me() {
                 return this.$store.state.users.me;
             },
         },
         methods: {
-            onChangeTextarea(value){
-                if(value.length){
+            onChangeTextarea(value) {
+                if (value.length) {
                     this.hideDetails = true;
                     this.success = false;
                     this.successMessages = '';
                 }
             },
-            onSubmitForm(){
-                if(this.$ref.form.validate()){
+            onSubmitForm() {
+                if (this.$refs.form.validate()) {
                     this.$store.dispatch('posts/addComment', {
-                        if: Date.now(),
-                        postId: this.value,
+                        id: Date.now(),
+                        postId: this.postId,
                         content: this.content,
-                        Users:{
+                        User: {
                             nickname: this.me.nickname,
-                        }
+                        },
                     })
-                    .then(() => {
-                        this.content = '';
-                        this.success = true;
-                        this.successMessages = '댓글이 작성되었었습니다.';
-                        this.hideDetails = false;
-                   })
-                    .catch(() => {
-
-                    });
+                        .then(() => {
+                            this.content = '';
+                            this.success = true;
+                            this.successMessages = '댓글이 작성되었습니다.';
+                            this.hideDetails = false;
+                        })
+                        .catch(() => {
+                        });
                 }
             }
         },
