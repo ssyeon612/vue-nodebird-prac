@@ -14,6 +14,13 @@
     "_name": "_55e72724"
   },
   {
+    "name": "hashtag-id",
+    "path": "/hashtag/:id",
+    "component": "C:\\\\Users\\\\appg\\\\IdeaProjects\\\\vue-nodebird\\\\ch2\\\\front\\\\pages\\\\hashtag\\\\_id\\\\index.vue",
+    "chunkName": "pages/hashtag/_id/index",
+    "_name": "_b3bdcd70"
+  },
+  {
     "name": "post-id",
     "path": "/post/:id",
     "component": "C:\\\\Users\\\\appg\\\\IdeaProjects\\\\vue-nodebird\\\\ch2\\\\front\\\\pages\\\\post\\\\_id\\\\index.vue",
