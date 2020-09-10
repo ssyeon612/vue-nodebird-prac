@@ -52,4 +52,15 @@ export const actions = {
             commit('loadPosts');
         }
     },
+    uploadImages({ commit }, payload) {
+        this.$axios.post('http://localhost:3085/post/images', payload, {
+            withCredentials: true,
+        })
+            .then((res) => {
+
+            })
+            .catch(() => {
+
+            })
+    }
 };

@@ -48,6 +48,7 @@
                     this.$store.dispatch('users/logIn', {
                         email: this.email,
                         nickname: 'stella',
+                        password: this.password,
                     });
                 }
             },

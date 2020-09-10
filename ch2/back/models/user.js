@@ -15,10 +15,11 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         charset: 'utf8',
-        collate: 'utf8_general_ci'      //한글 저장
+        collate: 'utf8_general_ci',      //한글 저장
     });
     User.associate = (db) => {
-
+        db.Post.belongsTo(db.User);         //사용자는 게시글을 여러개 작성 가능하다
+        db.User.hasMany(db.Comment);
     };
     return User;
 }
