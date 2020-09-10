@@ -52,42 +52,51 @@ export const mutations = {
 };
 
 export const actions = {
-    signUp({ commit, state }, payload) {
+    signUp({commit, state}, payload) {
         this.$axios.post('http://localhost:3085/user', {
             email: payload.email,
             nickname: payload.nickname,
             password: payload.password,
-        });
-        commit('setMe', payload);
+        }).then((data) => {
+            console.log(data);
+            commit('setMe', payload);
+        })
     },
-    logIn({ commit }, payload) {
-        commit('setMe', payload);
+    logIn({commit}, payload) {
+        this.$axios.post('http://localhost:3085/user/login', {
+            email: payload.email,
+            password: payload.password,
+        }).then((data) => {
+            commit('setMe', payload);
+        }).catch((err) => {
+            console.error(err);
+        })
     },
-    logOut({ commit }, payload) {
+    logOut({commit}, payload) {
         commit('setMe', null);
     },
-    changeNickname({ commit }, payload) {
+    changeNickname({commit}, payload) {
         commit('changeNickname', payload);
     },
-    addFollowing({ commit }, payload) {
+    addFollowing({commit}, payload) {
         commit('addFollowing', payload);
     },
-    addFollower({ commit }, payload) {
+    addFollower({commit}, payload) {
         commit('addFollower', payload);
     },
-    removeFollowing({ commit }, payload) {
+    removeFollowing({commit}, payload) {
         // 비동기 요청
         commit('removeFollowing', payload);
     },
-    removeFollower({ commit }, payload) {
+    removeFollower({commit}, payload) {
         commit('removeFollower', payload);
     },
-    loadFollowers({ commit, state }, payload) {
+    loadFollowers({commit, state}, payload) {
         if (state.hasMoreFollower) {
             commit('loadFollowers');
         }
     },
-    loadFollowings({ commit, state }, payload) {
+    loadFollowings({commit, state}, payload) {
         if (state.hasMoreFollowing) {
             commit('loadFollowings');
         }
