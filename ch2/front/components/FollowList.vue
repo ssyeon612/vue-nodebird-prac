@@ -1,6 +1,5 @@
 <template>
     <v-list>
-        <div>{{ abc && abc.join('') }}</div>
         <v-col v-for="user in users" :key="user.id" cols="12" md="4" style="display: inline-block">
             <v-list-item>
                 <v-list-item-avatar color="indigo">

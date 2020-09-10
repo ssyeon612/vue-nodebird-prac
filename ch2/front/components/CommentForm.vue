@@ -5,9 +5,9 @@
                 filled
                 auto-grow
                 label="댓글 달기"
-                :hide-details="hiddenDetails"
+                :hide-details="hideDetails"
                 :success="success"
-                :success-message="successMessage"
+                :success-messages="successMessages"
                 @input="onChangeTextarea"
         />
         <v-btn color="green" dark absolute top right type="submit">삐약</v-btn>
@@ -29,7 +29,7 @@
                 success: false,
                 successMessages: '',
                 hideDetails: true,
-            }
+            };
         },
         computed: {
             me() {
@@ -47,12 +47,8 @@
             onSubmitForm() {
                 if (this.$refs.form.validate()) {
                     this.$store.dispatch('posts/addComment', {
-                        id: Date.now(),
                         postId: this.postId,
                         content: this.content,
-                        User: {
-                            nickname: this.me.nickname,
-                        },
                     })
                         .then(() => {
                             this.content = '';
@@ -63,11 +59,10 @@
                         .catch(() => {
                         });
                 }
-            }
+            },
         },
-    }
+    };
 </script>
 
 <style>
-
 </style>

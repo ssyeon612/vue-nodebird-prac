@@ -52,8 +52,19 @@ export const mutations = {
 };
 
 export const actions = {
+    loadUser({commit}) {
+        this.$axios.get('/user', {
+            withCredentials: true,              // 쿠키 반드시 넘겨주기
+        })
+            .then((res)=>{
+                commit('setMe',res.data);
+            })
+            .catch(()=>{
+
+            });
+    },
     signUp({commit, state}, payload) {
-        this.$axios.post('http://localhost:3085/user', {
+        this.$axios.post('/user', {
             email: payload.email,
             nickname: payload.nickname,
             password: payload.password,
@@ -62,7 +73,7 @@ export const actions = {
         })
     },
     logIn({commit}, payload) {
-        this.$axios.post('http://localhost:3085/user/login', {
+        this.$axios.post('/user/login', {
             email: payload.email,
             password: payload.password,
         }, {
@@ -74,7 +85,7 @@ export const actions = {
         })
     },
     logOut({commit}) {
-        this.$axios.post('http://localhost:3085/user/logout', {}, {
+        this.$axios.post('/user/logout', {}, {
             withCredentials: true,
         })
             .then((data) => {

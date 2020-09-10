@@ -1,7 +1,7 @@
 <template>
-    <div style="margin-bottom: 20px;">
+    <div style="margin-bottom: 20px">
         <v-card>
-            <v-image/>
+            <post-images :images="post.Images || []" />
             <v-card-title>
                 <h3>
                     <nuxt-link :to="'/user/' + post.id">{{post.User.nickname}}</nuxt-link>
@@ -36,15 +36,15 @@
             </v-card-actions>
         </v-card>
         <template v-if="commentOpened">
-            <comment-form :post-id="post.id"/>
+            <comment-form :post-id="post.id" />
             <v-list>
                 <v-list-item v-for="c in post.Comments" :key="c.id">
                     <v-list-item-avatar color="teal">
                         <span>{{c.User.nickname[0]}}</span>
                     </v-list-item-avatar>
                     <v-list-item-content>
-                        <v-list-item-title>{{ c.User.nickname }}</v-list-item-title>
-                        <v-list-item-subtitle>{{ c.content }}</v-list-item-subtitle>
+                        <h3>{{c.User.nickname}}</h3>
+                        <div>{{c.content}}</div>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -54,41 +54,45 @@
 
 <script>
     import CommentForm from '~/components/CommentForm';
-
+    import PostImages from '~/components/PostImages';
     export default {
         components: {
             CommentForm,
-        },
-        data() {
-            return {
-                commentOpened: false,
-            }
+            PostImages
         },
         props: {
             post: {
                 type: Object,
                 required: true,
             },
-
+        },
+        data() {
+            return {
+                commentOpened: false,
+            };
         },
         methods: {
             onRemovePost() {
                 this.$store.dispatch('posts/remove', {
-                    id: this.post.id,
+                    postid: this.post.id,
                 });
             },
             onEditPost() {
-
             },
             onToggleComment() {
+                if(!this.commentOpened){            // 닫혀있는 상황에서 열기
+                    this.$store.dispatch('posts/loadComments', {
+                        postId: this.post.id,
+                    });
+                }
                 this.commentOpened = !this.commentOpened;
-            }
-        }
+            },
+        },
     };
 </script>
 
 <style scoped>
-    a{
+    a {
         color: inherit;
         text-decoration: none;
     }
