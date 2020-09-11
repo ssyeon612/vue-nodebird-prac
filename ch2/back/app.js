@@ -13,7 +13,7 @@ const postsRouter = require('./routes/posts');
 const hashtagRouter = require('./routes/hashtag');
 const app = express();
 
-db.sequelize.sync();
+db.sequelize.sync( { force: true });
 passportConfig();
 
 app.use(morgan('dev'));

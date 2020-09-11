@@ -15,6 +15,7 @@ import { createStore } from './store.js'
 
 import nuxt_plugin_plugin_513c3387 from 'nuxt_plugin_plugin_513c3387' // Source: .\\vuetify\\plugin.js (mode: 'all')
 import nuxt_plugin_axios_47b99b30 from 'nuxt_plugin_axios_47b99b30' // Source: .\\axios.js (mode: 'all')
+import nuxt_plugin_moment_83b54730 from 'nuxt_plugin_moment_83b54730' // Source: .\\moment.js (mode: 'all')
 
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
@@ -67,7 +68,7 @@ async function createApp(ssrContext, config = {}) {
   // here we inject the router and store to all child components,
   // making them available everywhere as `this.$router` and `this.$store`.
   const app = {
-    head: {"title":"NodeBird","meta":[],"link":[{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss?family=Roboto:100,300,400,500,700,900&display=swap"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Fcdn.jsdelivr.net\u002Fnpm\u002F@mdi\u002Ffont@latest\u002Fcss\u002Fmaterialdesignicons.min.css"}],"style":[],"script":[]},
+    head: {"title":"NodeBird","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes,viewport-fit=cover"},{"http-equiv":"X-UA-Compatible","content":"IE=edge"},{"hid":"desc","name":"description","content":"제로초의 NodeBird SNS"},{"hid":"ogtitle","name":"og:title","content":"NodeBird"},{"hid":"ogdesc","name":"og:description","content":"제로초의 NodeBird SNS"},{"hid":"ogtype","property":"og:type","content":"website"},{"hid":"ogimage","property":"og:image","content":"https:\u002F\u002Fvue.nodebird.com\u002Fvue-nodebird.png"},{"hid":"ogurl","property":"og:url","content":"https:\u002F\u002Fvue.nodebird.com"}],"link":[{"rel":"shortcut icon","href":"\u002Fvue-nodebird.png"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss?family=Roboto:100,300,400,500,700,900&display=swap"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Fcdn.jsdelivr.net\u002Fnpm\u002F@mdi\u002Ffont@latest\u002Fcss\u002Fmaterialdesignicons.min.css"}],"style":[],"script":[]},
 
     store,
     router,
@@ -202,6 +203,10 @@ async function createApp(ssrContext, config = {}) {
 
   if (typeof nuxt_plugin_axios_47b99b30 === 'function') {
     await nuxt_plugin_axios_47b99b30(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_moment_83b54730 === 'function') {
+    await nuxt_plugin_moment_83b54730(app.context, inject)
   }
 
   // Lock enablePreview in context

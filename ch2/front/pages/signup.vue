@@ -5,7 +5,7 @@
                 <v-container>
                     <v-subheader>회원가입</v-subheader>
                     <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
-                        <v-text-field v-model="email" label="이메일" type="email" required :rules="emailRules" />
+                        <v-text-field v-model="userId" label="이메일" required :rules="userIdRules" />
                         <v-text-field v-model="password" label="비밀번호" type="password" :rules="passwordRules" required/>
                         <v-text-field v-model="passwordCheck"  label="비밀번호확인" type="password" :rules="passwordCheckRules" required/>
                         <v-text-field v-model="nickname" label="닉네임" type="nickname" :rules="nicknameRules" required/>
@@ -23,12 +23,12 @@
         data() {
             return {
                 valid: false,                //회원가입이 눌릴 수 있는지에 대한 데이터
-                email: '',
+                userId: '',
                 password: '',
                 passwordCheck: '',
                 nickname: '',
                 terms: false,
-                emailRules: [
+                userIdRules: [
                   v => !!v || '이메일이 필수입니다.',
                   v =>  /.+@.+/.test(v) || '이메일이 유효하지 않습니다.',
                 ],
@@ -63,7 +63,7 @@
                 if(this.$refs.form.validate()){
                     this.$store.dispatch('users/signUp', {
                         nickname: this.nickname,
-                        email: this.email,
+                        userId: this.userId,
                         password: this.password,
                     })
                     .then(() => {

@@ -18,8 +18,9 @@ export const mutations = {
     },
     loadComments(state, payload) {
         const index = state.mainPosts.findIndex(v => v.id === payload.postId);
-        // 실수: state.mainPosts[index].Comments = payload.data;
         Vue.set(state.mainPosts[index], 'Comments', payload.data);
+    }, loadPost(state, payload) {
+        state.mainPosts = [payload];
     },
     addComment(state, payload) {
         const index = state.mainPosts.findIndex(v => v.id === payload.PostId);
@@ -53,7 +54,7 @@ export const mutations = {
 };
 
 export const actions = {
-    add({ commit, state }, payload) {
+    add({commit, state}, payload) {
         // 서버에 게시글 등록 요청 보냄
         this.$axios.post('/post', {
             content: payload.content,
@@ -68,7 +69,7 @@ export const actions = {
 
             });
     },
-    remove({ commit }, payload) {
+    remove({commit}, payload) {
         this.$axios.delete(`/post/${payload.postId}`, {
             withCredentials: true,
         })
@@ -79,7 +80,7 @@ export const actions = {
 
             });
     },
-    addComment({ commit }, payload) {
+    addComment({commit}, payload) {
         this.$axios.post(`/post/${payload.postId}/comment`, {
             content: payload.content,
         }, {
@@ -93,7 +94,7 @@ export const actions = {
 
             });
     },
-    loadComments({ commit }, payload) {
+    loadComments({commit}, payload) {
         this.$axios.get(`/post/${payload.postId}/comments`)
             .then((res) => {
                 commit('loadComments', {
@@ -105,7 +106,15 @@ export const actions = {
                 console.error(err);
             });
     },
-    loadPosts: throttle(async function({ commit, state }, payload) {
+    async loadPost({commit, state}, payload) {
+        try {
+            const res = await this.$axios.get(`/posts/${payload}?limit=10`);
+            commit('loadPost', res.data);
+        } catch (err) {
+            console.error(err);
+        }
+    },
+    loadPosts: throttle(async function ({commit, state}, payload) {
         console.log('loadPosts');
         try {
             if (payload && payload.reset) {
@@ -128,7 +137,7 @@ export const actions = {
             console.error(err);
         }
     }, 2000),
-    loadUserPosts: throttle(async function({ commit, state }, payload) {
+    loadUserPosts: throttle(async function ({commit, state}, payload) {
         try {
             if (payload && payload.reset) {
                 const res = await this.$axios.get(`/user/${payload.userId}/posts?limit=10`);
@@ -150,7 +159,7 @@ export const actions = {
             console.error(err);
         }
     }, 2000),
-    loadHashtagPosts: throttle(async function({ commit, state }, payload) {
+    loadHashtagPosts: throttle(async function ({commit, state}, payload) {
         try {
             if (payload && payload.reset) {
                 const res = await this.$axios.get(`/hashtag/${payload.hashtag}?limit=10`);
@@ -172,7 +181,7 @@ export const actions = {
             console.error(err);
         }
     }, 2000),
-    uploadImages({ commit }, payload) {
+    uploadImages({commit}, payload) {
         this.$axios.post('/post/images', payload, {
             withCredentials: true,
         })
@@ -183,7 +192,7 @@ export const actions = {
                 console.error(err);
             });
     },
-    retweet({ commit }, payload) {
+    retweet({commit}, payload) {
         this.$axios.post(`/post/${payload.postId}/retweet`, {}, {
             withCredentials: true,
         })
@@ -195,7 +204,7 @@ export const actions = {
                 alert(err.response.data);
             });
     },
-    likePost({ commit }, payload) {
+    likePost({commit}, payload) {
         this.$axios.post(`/post/${payload.postId}/like`, {}, {
             withCredentials: true,
         })
@@ -209,7 +218,7 @@ export const actions = {
                 console.error(err);
             });
     },
-    unlikePost({ commit }, payload) {
+    unlikePost({commit}, payload) {
         this.$axios.delete(`/post/${payload.postId}/like`, {
             withCredentials: true,
         })
