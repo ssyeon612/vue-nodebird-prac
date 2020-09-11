@@ -19,14 +19,14 @@
                 <v-container>
                     <v-subheader>팔로잉</v-subheader>
                     <follow-list :users="followingList" :remove="removeFollowing" />
-                    <v-btn @click="loadMoreFollowings" v-if="hasMoreFollowing" dark color="blue" style="width: 100%">더보기</v-btn>
+                    <v-btn v-if="hasMoreFollowing" dark color="blue" style="width: 100%" @click="loadMoreFollowings">더보기</v-btn>
                 </v-container>
             </v-card>
             <v-card style="margin-bottom: 20px">
                 <v-container>
                     <v-subheader>팔로워</v-subheader>
-                    <follow-list :abc="abc" :users="followerList" :remove="removeFollower" />
-                    <v-btn @click="loadMoreFollowers" v-if="hasMoreFollower" dark color="blue" style="width: 100%">더보기</v-btn>
+                    <follow-list :users="followerList" :remove="removeFollower" />
+                    <v-btn v-if="hasMoreFollower" dark color="blue" style="width: 100%" @click="loadMoreFollowers">더보기</v-btn>
                 </v-container>
             </v-card>
         </v-container>
@@ -41,7 +41,6 @@
         },
         data() {
             return {
-                abc: [1, 2, 3],
                 valid: false,
                 nickname: '',
                 nicknameRules: [
@@ -64,11 +63,10 @@
             },
         },
         fetch({ store }) {
-            store.dispatch('users/loadFollowers');
-            store.dispatch('users/loadFollowings');
-        },
-        mounted() {
-          this.$set(this.abc, '0' ,'5');
+            return Promise.all([
+                store.dispatch('users/loadFollowings', { offset: 0 }),
+                store.dispatch('users/loadFollowers', { offset: 0 }),
+            ]);
         },
         methods: {
             onChangeNickname() {
@@ -76,11 +74,11 @@
                     nickname: this.nickname,
                 });
             },
-            removeFollowing(id) {
-                this.$store.dispatch('users/removeFollowing', { id });
+            removeFollowing(userId) {
+                this.$store.dispatch('users/unfollow', { userId });
             },
-            removeFollower(id) {
-                this.$store.dispatch('users/removeFollower', { id });
+            removeFollower(userId) {
+                this.$store.dispatch('users/removeFollower', { userId });
             },
             loadMoreFollowers() {
                 this.$store.dispatch('users/loadFollowers');
